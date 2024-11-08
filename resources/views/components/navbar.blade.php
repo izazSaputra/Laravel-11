@@ -1,4 +1,4 @@
-<nav class="bg-gray-800" x-data="{ isOpen: false }">
+<nav style="background-color: #1269cc; color: white; z-index: 50;" x-data="{ isOpen: false }">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
             <div class="flex items-center">
@@ -37,9 +37,9 @@
                                             </li>
                                             @auth
                                                 @if (Auth::user()->role == 'petugas')
-                                            <li>
-                                                <x-nav-link :active="request()->is('about')" href="/admin">AdminOnly</x-nav-link>
-                                            </li>
+                                                    <li>
+                                                        <x-nav-link :active="request()->is('about')" href="/admin">AdminOnly</x-nav-link>
+                                                    </li>
                                                 @endif
                                             @endauth
                                         </ul>
@@ -56,8 +56,8 @@
                         <a href="/login""
                             class="text-gray-100 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 hover:text-gray-700 focus:outline-none dark:focus:ring-gray-800">Log
                             in</a>
-                        <a href="/register"
-                            class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">Get
+                        <a href="/register" style="background-color: #6d9ac7; color: white;"
+                            class="text-white focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">Get
                             started</a>
                         <button data-collapse-toggle="mobile-menu-2" type="button"
                             class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
@@ -86,9 +86,7 @@
                                 id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                                 <span class="absolute -inset-1.5"></span>
                                 <span class="sr-only">Open user menu</span>
-                                <img class="h-8 w-8 rounded-full"
-                                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                    alt="">
+
                             </button>
                         </div>
                         <div x-show="isOpen" x-transition:enter="transition ease-out duration-100 transform"

@@ -2,11 +2,9 @@
     <x-slot:title>{{ $title }}</x-slot:title>
 
 
-    <section class="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
+    <section class=" py-8 antialiased dark:bg-gray-900 md:py-16" style="background-color: #303030">
         <div class="mx-auto max-w-screen-lg px-4 2xl:px-0">
             <div class="lg:flex lg:items-center lg:justify-between lg:gap-4">
-                <h2 class="shrink-0 text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Report
-                    ({{ \App\Models\Post::count() }})</h2>
 
                 <form class="mt-4 w-full gap-4 sm:flex sm:items-center sm:justify-end lg:mt-0">
                     @if (request('category'))
@@ -49,25 +47,26 @@
             </div>
 
             <div class="mt-4 flow-root">
-                <div class="-my-3 divide-y divide-gray-200 dark:divide-gray-800">
+                <div class="-my-3 divide-y divide-gray-200 dark:divide-gray-100">
                     @forelse($posts as $post)
                         <div class="space-y-4 py-6 md:py-8">
                             <div class="grid gap-5">
                                 <div>
                                     <a href="/posts?category={{ $post->category->slug }}">
                                         <span
-                                            class="inline-block rounded bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-100 dark:bg-green-900"
+                                            class="inline-block rounded bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-100 dark:bg-green-100"
                                             style="background: {{ $post->category->color }}">
                                             {{ $post->category->name }} </span>
                                     </a>
                                 </div>
 
                                 <a href="/posts/{{ $post->slug }}"
-                                    class="text-xl font-semibold text-gray-900 hover:underline dark:text-white">{{ $post['title'] }}</a>
+                                    class="text-xl font-semibold hover:underline dark:text-white"
+                                    style="color: #6d9ac7">{{ $post['title'] }}</a>
                             </div>
-                            <p class="text-base font-normal text-gray-500 dark:text-gray-400">
+                            <p class="text-base font-normal text-gray-100 dark:text-gray-100">
                                 {{ Str::limit($post['body'], 150) }}</p>
-                            <p class="text-sm font-bold text-gray-800 dark:text-gray-400">
+                            <p class="text-sm font-bold dark:text-gray-400" style="color: #51eefc">
                                 {{ $post->created_at->diffForHumans() }}
                                 <a href="#" class="text-gray-900 hover:underline dark:text-white ">
                                     @if ($post->author)
@@ -83,7 +82,7 @@
                             </p>
                         </div>
                     @empty
-                        <section class="bg-white dark:bg-gray-900">
+                        <section class=" dark:bg-gray-900" style="background-color: #303030">
                             <center>
                                 <div class="py-8 px-9 mx-auto max-w-screen-xl lg:py-38 lg:px-6">
                                     <div class="mx-auto max-w-screen-sm text-center">
@@ -117,7 +116,7 @@
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                 <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                        Create New Post
+                        Kirim Laporan
                     </h3>
                     <button type="button"
                         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
@@ -135,17 +134,19 @@
                     <div class="grid gap-4 mb-4 grid-cols-2">
                         <div class="col-span-2">
                             <label for="title"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                Judul Laporan
+                            </label>
                             <input type="text" name="title" id="title"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                placeholder="Post title" autocomplete="off">
+                                placeholder="Tulis Judul Laporan-mu!" autocomplete="off">
                         </div>
                         <div class="col-span-2">
                             <label for="category"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kategori</label>
                             <select name="category" id="category"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                <option selected="" value=" ">Select category</option>
+                                <option selected="" value=" ">Pilih Kategori</option>
                                 @foreach ($category as $c)
                                     <option value="{{ $c->id }}">{{ $c->name }}</option>
                                 @endforeach
@@ -153,11 +154,11 @@
                         </div>
                         <div class="col-span-2">
                             <label for="description"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product
-                                Description</label>
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi
+                                Laporan</label>
                             <textarea name="body" id="description" rows="4"
                                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Write product description here"></textarea>
+                                placeholder="Tulis Laporan mu disini!"></textarea>
                         </div>
                     </div>
                     <button type="submit"
@@ -168,7 +169,7 @@
                                 d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                                 clip-rule="evenodd"></path>
                         </svg>
-                        Add new post
+                        Kirim Laporan!
                     </button>
                 </form>
             </div>

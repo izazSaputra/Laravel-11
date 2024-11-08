@@ -37,9 +37,9 @@ class UserController extends Controller
         'nik' => 'required|max:16',
         'name' => 'required|string|max:35',
         'username' => 'required|string|max:25|unique:users,username',
-        'email' => 'required|email|regex:/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z]{2,}$/i|max:32',
-        'password' => 'required|string|min:6|max:32',
-        'telephone' => 'required|integer|max:13'
+        'email' => 'required|email',
+        'password' => 'required|string|max:32',
+        'telephone' => 'required|max:13'
 
     ]);
 

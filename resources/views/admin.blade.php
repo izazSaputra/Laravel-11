@@ -1,25 +1,42 @@
 <x-layout>
     <ul role="list" class="divide-y divide-gray-100">
         @forelse($posts as $post)
-            <li class="flex justify-between gap-x-6 py-5">
-                <div class="flex min-w-0 gap-x-4">
-                    <p>{{ $post->id }}</p>
-                    @if ($post->author)
-                        <div class="min-w-0 flex-auto">
-                            <a href="{{ $post->author->username }}" class="text-sm/6 font-semibold text-gray-900">{{ $post->author->name }}</a>
-                            <p class="mt-1 truncate text-xs/5 text-gray-500">{{ $post['body'] }}</p>
-                        </div>
-                    @endif
-                </div>
-                <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                    <form method="POST" action="{{ route('post.updateStatus', $post->id) }}">
-                        @csrf
-                        <button type="submit">Ubah Status</button>
-                    </form>
-                    <p class="mt-1 text-xs/5 text-gray-500">Created {{ $post->created_at->diffForHumans() }}
-                    </p>
-                </div>
-            </li>
+        <li class="flex justify-between items-start gap-x-6 py-6 border-b border-gray-300">
+            <div class="flex min-w-0 gap-x-6">
+                <span class="font-bold text-lg text-gray-100">{{ $post->id }}</span>
+                @if ($post->author)
+                    <div class="min-w-0 flex-auto">
+                        <a href="/admin/{{ $post->slug }}" class="text-lg font-semibold hover:text-blue-900" style="color: #51eefc">
+                            {{ $post->title}}
+                        </a>
+                        <p class="mt-2 truncate text-sm text-gray-100">
+                            {{ Str::limit($post['body'], 120) }}
+                        </p>
+                    </div>
+                @endif
+            </div>
+            <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+                <form method="POST" action="{{ route('post.updateStatus', $post->id) }}">
+                    @csrf
+                    <button type="submit" class="text-blue-600 text-lg hover:underline">
+                        {{ $post->status === 'Approve' ? 'Unapprove' : 'Approve' }}
+                    </button>
+                </form>
+        
+                <form method="POST" action="{{ route('posts.destroy', $post->id) }}">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="text-red-600 text-lg hover:underline mt-2"
+                        onclick="return confirm('Apakah Anda yakin ingin menghapus post ini?')">
+                        Not Approve
+                    </button>
+                </form>
+                <p class="mt-2 text-sm text-gray-100">
+                    Created {{ $post->created_at->diffForHumans() }} by 
+                    <span class=" font-semibold" style="color:#6d9ac7">{{ $post->author->name }}</span>
+                </p>
+            </div>
+        </li>
         @empty
             <section class="bg-white dark:bg-gray-900">
                 <center>

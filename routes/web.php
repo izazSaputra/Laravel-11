@@ -6,14 +6,18 @@ use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SliderController;
 
 Route::get('/', function () {
     return view('home', ['title' => 'HOME']);
 });
 
-Route::get('/posts', [PostController::class, 'index'])->middleware('role:operator,masyarakat,petugas')->name('home');
+Route::get('/posts', [PostController::class, 'index'])->name('home');
 
-Route::get('/posts/{post:slug}', [PostController::class, 'show'])->middleware('role:masyarakat,petugas,operator');
+Route::get('/posts/{post:slug}', function( Post $post) {
+
+        return view('post', ['title' => 'First Post', 'post' => $post]);
+});
 
 Route::get('/authors/{user:username}', function(User $user) {
 
@@ -33,13 +37,26 @@ Route::get('/contact', function () {
 
 Route::get('/admin', function () {
     return view('admin', ['title' => 'ABOUT ME' ,             
-    'posts' => Post::where('status', '=', 'Approve')
+    'posts' => Post::where('status', '=', 'Not Approve')
     ->filter(request(['search', 'category', 'author']))
         ->latest()
         ->paginate(10)
         ->withQueryString(),
     'category' => Category::all()]);
 });
+
+Route::get('report', function(Post $post) {
+    return view('report', ['title' => 'Report Post', 'post' => $post]);
+});
+
+Route::get('/admin/{post:slug}', function( Post $post) {
+
+    return view('post', ['title' => 'First Post', 'post' => $post]);
+})->middleware('role:petugas, operator');
+
+Route::delete('/posts/{post}', [PostController::class, 'destroy'])
+    ->middleware('role:operator,petugas')
+    ->name('posts.destroy');
 
 Route::get('/profile', function (){
     return view('profile', ['title' => 'PROFILE']);
@@ -64,4 +81,3 @@ Route::get('/navbar/{id}', [PostController::class, 'show']);
 Route::get('/logout', [UserController::class, 'logout']);
 
 Route::post('/post/{id}/update-status', [PostController::class, 'updateStatus'])->name('post.updateStatus');
-
